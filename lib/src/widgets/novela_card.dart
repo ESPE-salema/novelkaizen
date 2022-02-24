@@ -3,8 +3,9 @@ import 'package:novelkaizen/src/models/novela_model.dart';
 import 'package:novelkaizen/src/pages/novela_page.dart';
 
 class NovelaCard extends StatelessWidget {
-  const NovelaCard({Key? key, required this.model}) : super(key: key);
+  const NovelaCard({Key? key, required this.model, required this.id}) : super(key: key);
   final Novela model;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class NovelaCard extends StatelessWidget {
                 context,
                 MaterialPageRoute<void>(
                     builder: (BuildContext context) =>
-                        NovelaPage(novela: model)),
+                        NovelaPage(novela: model, id: id)),
               );
             },
             child: ClipRRect(

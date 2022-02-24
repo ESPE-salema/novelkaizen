@@ -46,7 +46,7 @@ class _NovelaFirebaseWidgetState extends State<NovelaFirebaseWidget> {
                               document.data()! as Map<String, dynamic>;
                           Novela model = Novela.fromJson(data);
 
-                          return NovelaCard(model: model);
+                          return NovelaCard(model: model, id: document.id);
                         }).toList(),
                       ),
             floatingActionButton: FloatingActionButton(

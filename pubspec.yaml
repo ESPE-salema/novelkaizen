@@ -51,6 +51,10 @@ dependencies:
   firebase_messaging: ^11.2.6
   flutter_local_notifications: ^9.2.0
   flutter_phoenix: ^1.0.0
+  google_maps_flutter: ^2.1.1
+  permission_handler: ^9.0.2
+  translator: ^0.1.7
+  translated_text: ^0.0.2
 
 dependency_overrides:
   # Override for `flutter_local_notifications`:

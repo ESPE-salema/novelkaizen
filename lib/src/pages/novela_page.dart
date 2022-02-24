@@ -8,9 +8,11 @@ import 'package:novelkaizen/src/theme/app_theme.dart';
 import 'package:novelkaizen/src/widgets/novela_details_widget.dart';
 import 'package:provider/provider.dart';
 
+
 class NovelaPage extends StatelessWidget {
-  const NovelaPage({Key? key, required this.novela}) : super(key: key);
+  const NovelaPage({Key? key, required this.novela, required this.id}) : super(key: key);
   final Novela novela;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +78,7 @@ class NovelaPage extends StatelessWidget {
                 ),
               ),
             ))),
-        SliverFillRemaining(child: NovelaDetailsWidget(novela: novela))
+        SliverFillRemaining(child: NovelaDetailsWidget(novela: novela, id: id))
       ],
     )));
   }

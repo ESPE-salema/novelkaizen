@@ -114,7 +114,7 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final mainProvider = Provider.of<MainProvider>(context, listen: true);
+    final mainProvider = Provider.of<MainProvider>(context);
     return FutureBuilder<bool>(
         future: mainProvider.initPrefs(),
         builder: (context, snapshot) {

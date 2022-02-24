@@ -6,8 +6,9 @@ import 'package:novelkaizen/src/widgets/capitulo_widget.dart';
 import 'novela_details_content_widget.dart';
 
 class NovelaDetailsWidget extends StatefulWidget {
-  const NovelaDetailsWidget({Key? key, required this.novela}) : super(key: key);
+  const NovelaDetailsWidget({Key? key, required this.novela, required this.id}) : super(key: key);
   final Novela novela;
+  final String id;
 
   @override
   _NovelaDetailsWidgetState createState() => _NovelaDetailsWidgetState();
@@ -43,7 +44,7 @@ class _NovelaDetailsWidgetState extends State<NovelaDetailsWidget>
             controller: _tabController),
         body: TabBarView(children: [
           NovelaDetailsContentWidget(novela: widget.novela),
-          const CapituloWidget()
+          CapituloWidget(id: widget.id)
         ], controller: _tabController));
   }
 }

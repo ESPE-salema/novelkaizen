@@ -1,22 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:novelkaizen/src/models/capitulo_model.dart';
+import 'package:novelkaizen/src/widgets/capitulo_card.dart';
 import 'package:novelkaizen/src/widgets/capitulo_firebase_form_widget.dart';
 
 class CapituloWidget extends StatefulWidget {
-  const CapituloWidget({Key? key}) : super(key: key);
+  const CapituloWidget({Key? key, required this.id}) : super(key: key);
+  final String id;
 
   @override
   _CapituloWidgetState createState() => _CapituloWidgetState();
 }
 
 class _CapituloWidgetState extends State<CapituloWidget> {
- final Stream<QuerySnapshot> _novelasRef =
-      FirebaseFirestore.instance.collection('capitulos').snapshots();
+  late Stream<QuerySnapshot> _capitulosRef;
+
+  @override
+  void initState() {
+    super.initState();
+    _capitulosRef = FirebaseFirestore.instance
+        .collection('novelas')
+        .doc(widget.id)
+        .collection('capitulos')
+        .snapshots();
+  }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _novelasRef,
+      stream: _capitulosRef,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Center(child: Text("Un error ha ocurrido"));
@@ -35,9 +47,15 @@ class _CapituloWidgetState extends State<CapituloWidget> {
                         dimension: 50.0, child: CircularProgressIndicator()))
                 : snapshot.data!.docs.isEmpty
                     ? const Center(child: Text("No hay capitulos que mostrar"))
-                    : GridView.count(
-                        childAspectRatio: 0.6,
-                        crossAxisCount: 2,
+                    : ListView(
+                        children: snapshot.data!.docs
+                            .map((DocumentSnapshot document) {
+                          Map<String, dynamic> data =
+                              document.data()! as Map<String, dynamic>;
+                          Capitulo model = Capitulo.fromJson(data);
+
+                          return CapituloCard(model: model);
+                        }).toList(),
                       ),
             floatingActionButton: FloatingActionButton(
               elevation: 4,
@@ -45,13 +63,14 @@ class _CapituloWidgetState extends State<CapituloWidget> {
                 Navigator.push<void>(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const CapituloFirebaseFormWidget(),
+                    builder: (BuildContext context) =>
+                        const CapituloFirebaseFormWidget(),
                   ),
                 );
               },
               child: const Icon(Icons.add),
             ));
       },
-    ); 
+    );
   }
 }
