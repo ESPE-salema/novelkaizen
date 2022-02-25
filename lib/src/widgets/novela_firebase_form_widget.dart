@@ -152,19 +152,6 @@ class _NovelaFirebaseFormWidgetState extends State<NovelaFirebaseFormWidget> {
                                   labelText: "Decripción"),
                               maxLength: 255,
                               maxLines: 2),
-                          Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, "/speech");
-                                      },
-                                      child:
-                                          const Text("Ingresar texto por voz"))
-                                ],
-                              )),
                           Padding(
                               padding: const EdgeInsets.only(top: 7.0),
                               child: Text("Ingresar la fecha",

@@ -40,44 +40,45 @@ class _LocationWidgetState extends State<LocationWidget> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(
-      stream: null,
-      builder: (context, snapshot) {
-        return ExpansionTile(
-          leading: const Icon(Icons.location_on_outlined),
-          title: const Text("Ubicación"),
-          children: <Widget>[
-            Column(
-              children: [
-                Stack(children: [
-                  SizedBox(
-                    height: 400.0,
-                    child: GoogleMap(
-                      // ignore: prefer_collection_literals
-                      gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-                        Factory<OneSequenceGestureRecognizer>(
-                            () => EagerGestureRecognizer())
-                      ].toSet(),
-                      mapType: MapType.normal,
-                      markers: _markers.toSet(),
-                      myLocationEnabled: true,
-                      initialCameraPosition: _userPosition,
-                      onMapCreated: _onMapCreated,
-                    ), /*trailing: Switch(value: mainProvider.mode, onChanged: onChanged)*/
-                  ),
-                  Positioned(
-                    bottom: 12,
-                    right: 60,
-                    // ignore: deprecated_member_use
-                    child: FlatButton(
-                      onPressed: _addMarker,
-                      color: Palette.color,
-                      child: const Icon(
-                        Icons.pin_drop_outlined,
-                        color: Colors.white,
+        stream: null,
+        builder: (context, snapshot) {
+          return ExpansionTile(
+            leading: const Icon(Icons.location_on_outlined),
+            title: const Text("Ubicación"),
+            children: <Widget>[
+              Column(
+                children: [
+                  Stack(children: [
+                    SizedBox(
+                      height: 400.0,
+                      child: GoogleMap(
+                        gestureRecognizers:
+                            // ignore: prefer_collection_literals
+                            <Factory<OneSequenceGestureRecognizer>>[
+                          Factory<OneSequenceGestureRecognizer>(
+                              () => EagerGestureRecognizer())
+                        ].toSet(),
+                        mapType: MapType.normal,
+                        markers: _markers.toSet(),
+                        myLocationEnabled: true,
+                        initialCameraPosition: _userPosition,
+                        onMapCreated: _onMapCreated,
+                      ), /*trailing: Switch(value: mainProvider.mode, onChanged: onChanged)*/
+                    ),
+                    Positioned(
+                      bottom: 12,
+                      right: 60,
+                      // ignore: deprecated_member_use
+                      child: FlatButton(
+                        onPressed: _addMarker,
+                        color: Palette.color,
+                        child: const Icon(
+                          Icons.pin_drop_outlined,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                  ),
-                  /*Positioned(
+                    /*Positioned(
                           bottom: 50,
                           left: 10,
                           child: Slider(
@@ -86,13 +87,12 @@ class _LocationWidgetState extends State<LocationWidget> {
                             inactiveColor: Palette.color.withOpacity(0.2),
                             onChanged: _updateQuery,
                           ))*/
-                ]),
-              ],
-            ),
-          ],
-        );
-      }
-    );
+                  ]),
+                ],
+              ),
+            ],
+          );
+        });
   }
 
   _initCameraPosition() async {
@@ -119,18 +119,15 @@ class _LocationWidgetState extends State<LocationWidget> {
       position: LatLng(pos.latitude!, pos.longitude!),
       icon: BitmapDescriptor.defaultMarker,
     );
-    setState(() {
-      _markers.add(marker);
-    });
-  }
 
-  Future<DocumentReference> _addGeoPoint() async {
-    var pos = await location.getLocation();
     GeoFirePoint point =
         geoFire.point(latitude: pos.latitude!, longitude: pos.longitude!);
 
-    return firestore.collection('locations').add({
-      'position': point.data,
+    setState(() {
+      _markers.add(marker);
+      firestore.collection('locations').add({
+        'position': point.data,
+      });
     });
   }
 }
