@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:novelkaizen/src/theme/app_theme.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:location/location.dart';
-import 'package:rxdart/subjects.dart';
 
 class LocationWidget extends StatefulWidget {
   const LocationWidget({Key? key}) : super(key: key);
@@ -22,9 +21,6 @@ class _LocationWidgetState extends State<LocationWidget> {
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   Geoflutterfire geoFire = Geoflutterfire();
-
-  BehaviorSubject<double> radius = BehaviorSubject();
-  late Stream<dynamic> query;
 
   late CameraPosition _userPosition = const CameraPosition(
     target: LatLng(-0.225219, -78.5248),
@@ -63,7 +59,7 @@ class _LocationWidgetState extends State<LocationWidget> {
                         myLocationEnabled: true,
                         initialCameraPosition: _userPosition,
                         onMapCreated: _onMapCreated,
-                      ), /*trailing: Switch(value: mainProvider.mode, onChanged: onChanged)*/
+                      ),
                     ),
                     Positioned(
                       bottom: 12,
@@ -78,15 +74,6 @@ class _LocationWidgetState extends State<LocationWidget> {
                         ),
                       ),
                     ),
-                    /*Positioned(
-                          bottom: 50,
-                          left: 10,
-                          child: Slider(
-                            value: radius.value,
-                            activeColor: Palette.color,
-                            inactiveColor: Palette.color.withOpacity(0.2),
-                            onChanged: _updateQuery,
-                          ))*/
                   ]),
                 ],
               ),
