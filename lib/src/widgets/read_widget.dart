@@ -3,8 +3,8 @@ import 'package:novelkaizen/src/models/capitulo_model.dart';
 import 'package:novelkaizen/src/providers/main_provider.dart';
 import 'package:novelkaizen/src/theme/app_theme.dart';
 import 'package:provider/provider.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:translated_text/translated_text.dart';
+import 'package:translator/translator.dart';
+import 'dart:developer' as developer;
 
 class ReadWidget extends StatefulWidget {
   const ReadWidget({Key? key, required this.model}) : super(key: key);
@@ -15,6 +15,14 @@ class ReadWidget extends StatefulWidget {
 }
 
 class _ReadWidgetState extends State<ReadWidget> {
+  late String _contentCapitulo = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _translation();
+  }
+
   @override
   Widget build(BuildContext context) {
     final mainProvider = Provider.of<MainProvider>(context, listen: true);
@@ -36,12 +44,28 @@ class _ReadWidgetState extends State<ReadWidget> {
             hasScrollBody: false,
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: TranslatedText(
-                widget.model.contenido,
-                to: 'es',
-              ),
+              child: _contentCapitulo.isEmpty
+                  ? const Center(
+                      child: SizedBox.square(
+                          dimension: 50.0, child: CircularProgressIndicator()))
+                  : Text(
+                      _contentCapitulo,
+                      textAlign: TextAlign.justify,
+                    ),
             ))
       ],
     )));
+  }
+
+  _translation() async {
+    try {
+      var translation = await GoogleTranslator()
+          .translate(widget.model.contenido ?? "", to: 'es');
+      setState(() {
+        _contentCapitulo = translation.text;
+      });
+    } catch (e) {
+      developer.log(e.toString());
+    }
   }
 }

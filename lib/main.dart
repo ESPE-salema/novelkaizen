@@ -132,7 +132,7 @@ class _MyAppState extends State<MyApp> {
                 theme: AppTheme.themeData(mainProvider.mode),
                 routes: {
                   "/login": (context) => const LoginPage(),
-                  "/signup": (context) => const SignUpPage()
+                  "/signup": (context) => const SignUpPage(),
                 },
                 home: mainProvider.token == ""
                     ? const LoginPage()

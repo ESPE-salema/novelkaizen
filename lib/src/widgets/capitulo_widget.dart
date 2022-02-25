@@ -53,7 +53,6 @@ class _CapituloWidgetState extends State<CapituloWidget> {
                           Map<String, dynamic> data =
                               document.data()! as Map<String, dynamic>;
                           Capitulo model = Capitulo.fromJson(data);
-
                           return CapituloCard(model: model);
                         }).toList(),
                       ),
@@ -64,7 +63,8 @@ class _CapituloWidgetState extends State<CapituloWidget> {
                   context,
                   MaterialPageRoute<void>(
                     builder: (BuildContext context) =>
-                        const CapituloFirebaseFormWidget(),
+                        CapituloFirebaseFormWidget(
+                            id: widget.id, size: snapshot.data!.size),
                   ),
                 );
               },
