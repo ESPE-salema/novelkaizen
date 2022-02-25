@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:novelkaizen/src/pages/login_page.dart';
 import 'package:novelkaizen/src/pages/signup_page.dart';
+import 'package:novelkaizen/src/pages/speech_page.dart';
 import 'package:novelkaizen/src/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:novelkaizen/src/pages/home_page.dart';
@@ -64,7 +65,7 @@ Future<void> main() async {
     );
   }
 
-  runApp( MultiProvider(providers: [
+  runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => MainProvider()),
   ], child: Phoenix(child: const MyApp())));
 }
@@ -132,7 +133,8 @@ class _MyAppState extends State<MyApp> {
                 theme: AppTheme.themeData(mainProvider.mode),
                 routes: {
                   "/login": (context) => const LoginPage(),
-                  "/signup": (context) => const SignUpPage()
+                  "/signup": (context) => const SignUpPage(),
+                  "/speech": (context) => const SpeechPage()
                 },
                 home: mainProvider.token == ""
                     ? const LoginPage()

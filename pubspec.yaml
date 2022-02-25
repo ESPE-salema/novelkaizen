@@ -54,7 +54,10 @@ dependencies:
   google_maps_flutter: ^2.1.1
   permission_handler: ^9.0.2
   translator: ^0.1.7
-  translated_text: ^0.0.2
+  speech_to_text: ^5.4.3
+  avatar_glow: ^2.0.2
+  clipboard: ^0.1.3
+  url_launcher: ^6.0.20
 
 dependency_overrides:
   # Override for `flutter_local_notifications`:
