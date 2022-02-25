@@ -64,7 +64,7 @@ Future<void> main() async {
     );
   }
 
-  runApp( MultiProvider(providers: [
+  runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => MainProvider()),
   ], child: Phoenix(child: const MyApp())));
 }
