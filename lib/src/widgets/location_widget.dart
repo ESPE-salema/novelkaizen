@@ -35,51 +35,47 @@ class _LocationWidgetState extends State<LocationWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Object>(
-        stream: null,
-        builder: (context, snapshot) {
-          return ExpansionTile(
-            leading: const Icon(Icons.location_on_outlined),
-            title: const Text("Ubicación"),
-            children: <Widget>[
-              Column(
-                children: [
-                  Stack(children: [
-                    SizedBox(
-                      height: 400.0,
-                      child: GoogleMap(
-                        gestureRecognizers:
-                            // ignore: prefer_collection_literals
-                            <Factory<OneSequenceGestureRecognizer>>[
-                          Factory<OneSequenceGestureRecognizer>(
-                              () => EagerGestureRecognizer())
-                        ].toSet(),
-                        mapType: MapType.normal,
-                        markers: _markers.toSet(),
-                        myLocationEnabled: true,
-                        initialCameraPosition: _userPosition,
-                        onMapCreated: _onMapCreated,
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 12,
-                      right: 60,
-                      // ignore: deprecated_member_use
-                      child: FlatButton(
-                        onPressed: _addMarker,
-                        color: Palette.color,
-                        child: const Icon(
-                          Icons.pin_drop_outlined,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ]),
-                ],
+    return ExpansionTile(
+      leading: const Icon(Icons.location_on_outlined),
+      title: const Text("Ubicación"),
+      children: <Widget>[
+        Column(
+          children: [
+            Stack(children: [
+              SizedBox(
+                height: 400.0,
+                child: GoogleMap(
+                  gestureRecognizers:
+                      // ignore: prefer_collection_literals
+                      <Factory<OneSequenceGestureRecognizer>>[
+                    Factory<OneSequenceGestureRecognizer>(
+                        () => EagerGestureRecognizer())
+                  ].toSet(),
+                  mapType: MapType.normal,
+                  markers: _markers.toSet(),
+                  myLocationEnabled: true,
+                  initialCameraPosition: _userPosition,
+                  onMapCreated: _onMapCreated,
+                ),
               ),
-            ],
-          );
-        });
+              Positioned(
+                bottom: 12,
+                right: 60,
+                // ignore: deprecated_member_use
+                child: FlatButton(
+                  onPressed: _addMarker,
+                  color: Palette.color,
+                  child: const Icon(
+                    Icons.pin_drop_outlined,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ]),
+          ],
+        ),
+      ],
+    );
   }
 
   _initCameraPosition() async {

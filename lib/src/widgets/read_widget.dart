@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
 import 'package:novelkaizen/src/models/capitulo_model.dart';
 import 'package:novelkaizen/src/providers/main_provider.dart';
@@ -59,8 +62,12 @@ class _ReadWidgetState extends State<ReadWidget> {
 
   _translation() async {
     try {
+      String? locale = await Devicelocale.currentLocale;
+      locale = locale!.substring(0,2);
+      developer.log(locale);
+
       var translation = await GoogleTranslator()
-          .translate(widget.model.contenido ?? "", to: 'es');
+          .translate(widget.model.contenido ?? "", to: locale);
       setState(() {
         _contentCapitulo = translation.text;
       });
